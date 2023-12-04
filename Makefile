@@ -1,2 +1,4 @@
 run:
-	python api/app_server.py
+	uvicorn app_server:app --reload
+test:
+	pytest tests/
