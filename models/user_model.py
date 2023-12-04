@@ -9,18 +9,7 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
-    email = Column(String, unique=True)
+    name = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
 
-    task_assignees = relationship("Task", back_populates="assignee")
-
-
-class Task(Base):
-    __tablename__ = 'task'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    description = Column(String)
-    assignee_id = Column(Integer, ForeignKey('user.id'))
-
-    # Relation Many-to-One avec la table Utilisateur
-    assignee = relationship("Utilisateur", back_populates="taches_assignees")
+    tasks = relationship("Task", back_populates="assignee")
