@@ -1,14 +1,14 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from typing import List
-
-from schemas.user_schema import UserBase, UserWithTasks, UserUpdate
+from managers.user_management.user_manager import UserManager
+from schemas.user_schema import UserList, UserWithTasks, UserUpdate
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[UserBase])
-async def read_users():
-    return {"users": ["user 1", "user 2"]}
+@router.get("/", response_model=UserList)
+async def read_users(user_manager: UserManager = Depends()) -> UserList:
+    return user_manager.get_users()
 
 
 @router.get("/{id}/tasks", response_model=UserWithTasks)

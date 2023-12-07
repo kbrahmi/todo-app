@@ -5,12 +5,15 @@ from .task_schema import Task
 
 
 class UserBase(BaseModel):
-    id: int
     name: str
     email: EmailStr
 
     class Config:
         orm_mode = True
+
+
+class UserList(BaseModel):
+    users: List[UserBase]
 
 
 class UserWithTasks(UserBase):
