@@ -6,7 +6,7 @@ from schemas.user_schema import UserBase, UserWithTasks, UserUpdate
 router = APIRouter()
 
 
-@router.get("/users/", response_model=List[UserBase])
+@router.get("/", response_model=List[UserBase])
 async def read_users():
     return {"users": ["user 1", "user 2"]}
 
