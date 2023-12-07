@@ -2,7 +2,6 @@ from fastapi import FastAPI, responses
 
 from routers import user_router
 from routers import task_router
-from managers.task_management import task_manager
 
 
 app = FastAPI()
