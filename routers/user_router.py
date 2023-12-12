@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from schemas.user_schema import UserBase, UserList
 from managers.user_management.user_manager import UserManager
@@ -17,9 +17,9 @@ async def get_all_users(db: Session = Depends(get_db)):
 
 
 @router.get("/{id}", response_model=UserBase)
-async def get_user_by_id(id: int, db: Session = Depends(get_db)):
+async def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     user_manager = UserManager(UserRepository(db))
-    user = user_manager.get_user_by_id(id)
+    user = user_manager.get_user_by_id(user_id)
     return user
 
 
@@ -33,4 +33,8 @@ async def update_user():
     return
 
 
-
+@router.delete("/{id}")
+async def delete_user_by_id(user_id: int, db: Session = Depends(get_db)):
+    user_manager = UserManager(UserRepository(db))
+    user_manager.delete_user_by_id(user_id)
+    return {"message": "User deleted successfully"}

@@ -13,3 +13,6 @@ class UserManager:
         user = self.user_repository.get_user_by_id(user_id)
         return UserBase.from_orm(user) if user else None
 
+    def delete_user_by_id(self, user_id: int) -> bool:
+        return self.user_repository.delete_user_by_id(user_id)
+

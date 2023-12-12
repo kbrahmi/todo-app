@@ -15,3 +15,12 @@ class UserRepository:
 
     def get_user_by_id(self, user_id: int) -> User:
         return self.db.query(User).filter(User.id == user_id).first()
+
+    def delete_user_by_id(self, user_id: int) -> bool:
+        user = self.db.query(User).filter(User.id == user_id).first()
+        if not user:
+            return False
+        self.db.delete(user)
+        self.db.commit()
+        return True
+
