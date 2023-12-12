@@ -16,8 +16,8 @@ class UserList(BaseModel):
     users: List[UserBase]
 
 
-class UserWithTasks(UserBase):
-    tasks: List[Task] = []
+# class UserWithTasks(UserBase):
+#    tasks: List[Task] = []
 
 
 class UserUpdate(UserBase):
