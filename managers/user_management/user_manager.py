@@ -1,8 +1,5 @@
 from repositories.user_repository import UserRepository
-from models.user_model import User
-from typing import List
-
-from schemas.user_schema import UserList
+from schemas.user_schema import UserList, UserBase
 
 
 class UserManager:
@@ -11,3 +8,8 @@ class UserManager:
 
     def get_all_users(self) -> UserList:
         return self.user_repository.get_all_users()
+
+    def get_user_by_id(self, user_id: int) -> UserBase:
+        user = self.user_repository.get_user_by_id(user_id)
+        return UserBase.from_orm(user) if user else None
+
