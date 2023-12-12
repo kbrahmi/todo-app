@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import List
 from typing import Optional
-from .task_schema import Task
+from models.task_model import Task as TaskModel
 
 
 class UserBase(BaseModel):
@@ -10,6 +10,7 @@ class UserBase(BaseModel):
 
     class Config:
         orm_mode = True
+        from_attributes = True
 
 
 class UserList(BaseModel):
