@@ -23,5 +23,13 @@ class UserList(BaseModel):
 
 class UserUpdate(UserBase):
     name: Optional[str]
-    email: Optional[str]
+    password: Optional[str]
+    email: Optional[EmailStr]
+
+
+class UserCreate(BaseModel):
+    name: str
+    password: str
+    email: EmailStr
+
 
