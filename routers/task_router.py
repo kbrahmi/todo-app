@@ -1,19 +1,26 @@
-from fastapi import APIRouter
-# from managers.task_management import TaskManager
-
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from typing import List
+from schemas.task_schema import TaskList, TaskBase
+from managers.task_management.task_manager import TaskManager
+from repositories.task_repository import TaskRepository
+from database import get_db
 
 router = APIRouter()
-# manager = TaskManager()
 
 
-@router.get("/")
-async def read_tasks():
-    return # manager.get_all_tasks()
+@router.get("/", response_model=TaskList)
+async def read_tasks(db: Session = Depends(get_db)):
+    task_manager = TaskManager(TaskRepository(db))
+    tasks = task_manager.get_all_tasks()
+    return TaskList(tasks=[TaskBase.from_orm(task) for task in tasks])
 
 
-@router.get("/{id}")
-async def read_task(task_id: int):
-    return # manager.get_task_by_id(task_id)
+@router.get("/{id}", response_model=TaskBase)
+async def read_task(task_id: int, db: Session = Depends(get_db)):
+    task_manager = TaskManager(TaskRepository(db))
+    task = task_manager.get_task_by_id(task_id)
+    return task
 
 
 @router.post("/")

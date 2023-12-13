@@ -1,6 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import List
-from typing import Optional
+from typing import List, Optional
 from models.task_model import Task as TaskModel
 
 

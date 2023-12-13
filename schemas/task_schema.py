@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from enum import Enum, unique
-from typing import Optional
+from typing import Optional, List
 
 
 @unique
@@ -11,7 +11,6 @@ class TaskStatusEnum(str, Enum):
 
 
 class TaskBase(BaseModel):
-    id: int
     title: str
     description: str
     status: TaskStatusEnum
@@ -19,6 +18,10 @@ class TaskBase(BaseModel):
     class Config:
         orm_mode = True
         from_attributes = True
+
+
+class TaskList(BaseModel):
+    tasks: List[TaskBase]
 
 
 class Task(TaskBase):
