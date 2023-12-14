@@ -9,7 +9,9 @@ class UserManager:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    def get_all_users(self) -> UserList:
+    def get_all_users(self, current_user: dict) -> UserList:
+        if not current_user:
+            raise HTTPException(status_code=401, detail="Unauthorized")
         return self.user_repository.get_all_users()
 
     def get_user_by_id(self, user_id: int) -> UserBase:
