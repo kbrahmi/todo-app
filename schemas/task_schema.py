@@ -33,3 +33,10 @@ class TaskUpdate(TaskBase):
     description: Optional[str]
     status: Optional[TaskStatusEnum]
     assignee_id: Optional[int]
+
+
+class TaskCreate(BaseModel):
+    title: str
+    description: str
+    status: TaskStatusEnum
+    assignee_id: Optional[int] = None

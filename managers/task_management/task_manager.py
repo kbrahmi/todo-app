@@ -1,5 +1,5 @@
 from repositories.task_repository import TaskRepository
-from schemas.task_schema import TaskBase, TaskList
+from schemas.task_schema import TaskBase, TaskList, TaskCreate, TaskUpdate
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -15,11 +15,13 @@ class TaskManager:
         task = self.task_repository.get_task_by_id(task_id)
         return TaskBase.from_orm(task) if task else None
 
-    def create_task(self, task):
-        pass
+    def create_task(self, task_create: TaskCreate) -> TaskBase:
+        created_task = self.task_repository.create_task(task_create)
+        return TaskBase.from_orm(created_task) if created_task else None
 
-    def update_task(self, task_id: int, updated_task):
-        pass
+    def update_task(self, task_id: int, task_update: TaskUpdate) -> TaskBase:
+        updated_task = self.task_repository.update_task(task_id, task_update)
+        return TaskBase.from_orm(updated_task) if updated_task else None
 
-    def delete_task(self, task_id: int):
-        pass
+    def delete_task_by_id(self, task_id: int) -> bool:
+        return self.task_repository.delete_task(task_id)
