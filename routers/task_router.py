@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import List
 from schemas.task_schema import TaskList, TaskBase, TaskCreate, TaskUpdate
 from managers.task_management.task_manager import TaskManager
 from repositories.task_repository import TaskRepository

@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models.task_model import Task
-from typing import List
-from schemas.task_schema import TaskBase, TaskList, TaskCreate, TaskUpdate
+from schemas.task_schema import TaskList, TaskCreate, TaskUpdate
 
 
 class TaskRepository:

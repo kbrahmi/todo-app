@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from schemas.user_schema import UserBase, UserList, UserUpdate, UserCreate, UserTasks, UserName
-from managers.task_management.task_manager import TaskManager
 from managers.user_management.user_manager import UserManager
 from repositories.user_repository import UserRepository
-from repositories.task_repository import TaskRepository
 from database import get_db
 
 

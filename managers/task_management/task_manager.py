@@ -1,7 +1,5 @@
 from repositories.task_repository import TaskRepository
 from schemas.task_schema import TaskBase, TaskList, TaskCreate, TaskUpdate
-from sqlalchemy.orm import Session
-from typing import List
 
 
 class TaskManager:
