@@ -44,6 +44,11 @@ class UserCreate(BaseModel):
         from_attributes = True
 
 
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
 class UserTasks(BaseModel):
     user: UserName
     tasks: List[TaskBase]

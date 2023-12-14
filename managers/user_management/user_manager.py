@@ -2,6 +2,7 @@ from repositories.user_repository import UserRepository
 from schemas.user_schema import UserList, UserBase, UserUpdate, UserCreate
 from schemas.task_schema import TaskBase
 from typing import List
+from authentication.token import create_access_token
 from fastapi.exceptions import HTTPException
 
 
@@ -35,3 +36,11 @@ class UserManager:
             raise HTTPException(status_code=404, detail="User tasks not found")
         return user_tasks
 
+    def authenticate_user(self, email: str, password: str) -> UserBase:
+        user = self.user_repository.get_user_by_email(email)
+        if not user or user.password != password:
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+        return user
+
+    def generate_access_token(self, email: str) -> dict:
+        return create_access_token(data={"sub": email})

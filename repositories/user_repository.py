@@ -46,3 +46,5 @@ class UserRepository:
             return [TaskBase.from_orm(task) for task in user.tasks] if user.tasks else []
         return []
 
+    def get_user_by_email(self, email: str) -> User:
+        return self.db.query(User).filter(User.email == email).first()
