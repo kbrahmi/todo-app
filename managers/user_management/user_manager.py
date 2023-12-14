@@ -1,5 +1,8 @@
 from repositories.user_repository import UserRepository
 from schemas.user_schema import UserList, UserBase, UserUpdate, UserCreate
+from schemas.task_schema import TaskBase
+from typing import List
+from fastapi.exceptions import HTTPException
 
 
 class UserManager:
@@ -23,3 +26,10 @@ class UserManager:
     def create_user(self, user_create: UserCreate) -> UserBase:
         created_user = self.user_repository.create_user(user_create)
         return UserBase.from_orm(created_user) if created_user else None
+
+    def get_user_tasks_by_id(self, user_id: int) -> List[TaskBase]:
+        user_tasks = self.user_repository.get_user_tasks_by_id(user_id)
+        if not user_tasks:
+            raise HTTPException(status_code=404, detail="User tasks not found")
+        return user_tasks
+

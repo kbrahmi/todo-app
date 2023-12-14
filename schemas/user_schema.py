@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
-from models.task_model import Task as TaskModel
+from schemas.task_schema import TaskBase
 
 
 class UserBase(BaseModel):
@@ -12,12 +12,16 @@ class UserBase(BaseModel):
         from_attributes = True
 
 
+class UserName(BaseModel):
+    name: str
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
+
 class UserList(BaseModel):
     users: List[UserBase]
-
-
-# class UserWithTasks(UserBase):
-#    tasks: List[Task] = []
 
 
 class UserUpdate(UserBase):
@@ -25,10 +29,30 @@ class UserUpdate(UserBase):
     password: Optional[str]
     email: Optional[EmailStr]
 
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
 
 class UserCreate(BaseModel):
     name: str
     password: str
     email: EmailStr
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
+
+class UserTasks(BaseModel):
+    user: UserName
+    tasks: List[TaskBase]
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
+
+
 
 

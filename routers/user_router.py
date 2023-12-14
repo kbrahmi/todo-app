@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from schemas.user_schema import UserBase, UserList, UserUpdate, UserCreate
+from schemas.user_schema import UserBase, UserList, UserUpdate, UserCreate, UserTasks, UserName
+from managers.task_management.task_manager import TaskManager
 from managers.user_management.user_manager import UserManager
 from repositories.user_repository import UserRepository
+from repositories.task_repository import TaskRepository
 from database import get_db
 
 
@@ -23,9 +25,12 @@ async def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     return user
 
 
-@router.get("/{id}/tasks")
-async def read_user_tasks():
-    return
+@router.get("/{id}/tasks", response_model=UserTasks)
+async def read_user_tasks(user_id: int, db: Session = Depends(get_db)):
+    user_manager = UserManager(UserRepository(db))
+    user = user_manager.get_user_by_id(user_id)
+    user_tasks = user_manager.get_user_tasks_by_id(user_id)
+    return UserTasks(user=UserName(name=user.name), tasks=user_tasks)
 
 
 @router.patch("/{id}", response_model=UserBase)

@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from models.user_model import User
-from typing import List
-
 from schemas.user_schema import UserList, UserUpdate, UserCreate
+from schemas.task_schema import TaskBase
+from typing import List
 
 
 class UserRepository:
@@ -39,4 +39,10 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(user)
         return user
+
+    def get_user_tasks_by_id(self, user_id: int) -> List[TaskBase]:
+        user = self.db.query(User).filter(User.id == user_id).first()
+        if user:
+            return [TaskBase.from_orm(task) for task in user.tasks] if user.tasks else []
+        return []
 

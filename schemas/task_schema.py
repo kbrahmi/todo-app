@@ -40,3 +40,4 @@ class TaskCreate(BaseModel):
     description: str
     status: TaskStatusEnum
     assignee_id: Optional[int] = None
+
