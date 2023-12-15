@@ -2,6 +2,7 @@ from fastapi import FastAPI, responses, Depends
 from authentication.token import create_access_token, get_current_user
 from routers import user_router
 from routers import task_router
+from routers import login_router
 from database import init_db
 from authentication.token import oauth2_scheme
 
@@ -12,6 +13,7 @@ init_db()
 
 app.include_router(user_router.router, prefix="/users", tags=["users"])
 app.include_router(task_router.router, prefix="/tasks", tags=["tasks"])
+app.include_router(login_router.router, prefix="/login", tags=["login"])
 
 
 @app.get("/", include_in_schema=False)
